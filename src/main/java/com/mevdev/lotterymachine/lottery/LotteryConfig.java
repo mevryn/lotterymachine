@@ -38,5 +38,13 @@ public class LotteryConfig {
     public int getPrimeTokens() {
         return primeTokens;
     }
+
+    public int getGiftedTier2Tokens() {
+        return giftedTier2Tokens;
+    }
+
+    public int getGiftedTier3Tokens() {
+        return giftedTier3Tokens;
+    }
 }
 

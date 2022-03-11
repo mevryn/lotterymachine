@@ -1,6 +1,7 @@
 module com.mevdev.lotterymachine {
     requires javafx.controls;
     requires javafx.fxml;
+    requires com.opencsv;
 
 
     opens com.mevdev.lotterymachine.starter to javafx.fxml;

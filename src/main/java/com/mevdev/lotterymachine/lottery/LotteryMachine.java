@@ -13,7 +13,6 @@ public class LotteryMachine {
         this.lotteryConfig = lotteryConfig;
 
         if (subscriber == null || subscriber.isEmpty()) {
-//        if (subscriber != null && subscriber.isEmpty()) {
             throw new IllegalArgumentException("Provider subscriber list is not valid: " + subscriber);
         }
 

@@ -5,6 +5,10 @@ public enum SubType {
 
 
     public static SubType returnSubType(String subType) {
-        return subType.equals("gift") ? GIFTED : NORMAL;
+        return switch (subType) {
+            case "gift" -> GIFTED;
+            case "prime" -> PRIME;
+            default -> NORMAL;
+        };
     }
 }

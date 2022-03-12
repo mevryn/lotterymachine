@@ -1,6 +1,7 @@
 package com.mevdev.lotterymachine.starter;
 
 import com.mevdev.lotterymachine.lottery.LotteryConfig;
+import com.mevdev.lotterymachine.lottery.SubListHolder;
 import com.mevdev.lotterymachine.starter.localeloader.LocaleLoader;
 import com.mevdev.lotterymachine.starter.meta.MainApplicationResourceConstants;
 import com.mevdev.lotterymachine.subscribers.FileSubReader;
@@ -22,7 +23,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import static com.mevdev.lotterymachine.starter.HelloApplication.ICON_APPLICATION_NAME;
+import static com.mevdev.lotterymachine.starter.LotteryApplication.ICON_APPLICATION_NAME;
 
 public class MainViewController {
 
@@ -43,12 +44,9 @@ public class MainViewController {
 
     @FXML
     protected void onConfirmationButtonClick() throws IOException, URISyntaxException {
-        LotteryConfig lotteryConfig = getLotteryConfig();
-        //Start SubList
-        subList.isEmpty();
-        startSubList();
+        SubListHolder.setLotteryConfig(getLotteryConfig());
         //Start LotteryView
-        startSubList();
+        startLottery();
     }
 
     private LotteryConfig getLotteryConfig() {
@@ -85,18 +83,20 @@ public class MainViewController {
         SubReader subReader = new FileSubReader();
         subList = subReader.getSubList();
         if (!subList.isEmpty()) {
+            SubListHolder.setSubscriberList(subList);
             fileChosen.setText(resourceBundle.getString(MainApplicationResourceConstants.FILE_CHOSEN));
         } else {
+            SubListHolder.setSubscriberList(subList);
             fileChosen.setText("");
         }
         confirmationButton.setDisable(subList.isEmpty());
     }
 
-    private void startSubList() throws IOException, URISyntaxException {
-        ResourceBundle bundle = ResourceBundle.getBundle(MainApplicationResourceConstants.SUB_LIST_VIEW_RESOURCE,
+    private void startLottery() throws IOException, URISyntaxException {
+        ResourceBundle bundle = ResourceBundle.getBundle(MainApplicationResourceConstants.LOTTERY_VIEW_RESOURCE,
                 localeLoader.getProjectLocale());
         FXMLLoader fxmlLoader =
-                new FXMLLoader(getClass().getResource(MainApplicationResourceConstants.SUB_VIEW_FILE),
+                new FXMLLoader(getClass().getResource(MainApplicationResourceConstants.LOTTERY_VIEW_FILE),
                         bundle);
         Scene scene = new Scene(fxmlLoader.load());
         setStage(new Stage(), bundle, scene);

@@ -87,7 +87,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.mevdev.lotterymachine/com.mevdev.lotterymachine.starter.HelloApplication
+                            <mainClass>com.mevdev.lotterymachine/com.mevdev.lotterymachine.starter.LotteryApplication
                             </mainClass>
                         </configuration>
                     </execution>

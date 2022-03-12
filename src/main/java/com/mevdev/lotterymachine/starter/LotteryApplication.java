@@ -13,7 +13,7 @@ import java.net.URISyntaxException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class HelloApplication extends Application {
+public class LotteryApplication extends Application {
 
     public static final String ICON_APPLICATION_NAME = "icon.png";
 
@@ -28,7 +28,7 @@ public class HelloApplication extends Application {
         ResourceBundle bundle = ResourceBundle.getBundle(MainApplicationResourceConstants.MAIN_APPLICATION_RESOURCE,
                 localeLoader.getProjectLocale());
         FXMLLoader fxmlLoader =
-                new FXMLLoader(HelloApplication.class.getResource(MainApplicationResourceConstants.JAVAFX_FXML_FILE),
+                new FXMLLoader(LotteryApplication.class.getResource(MainApplicationResourceConstants.JAVAFX_FXML_FILE),
                         bundle);
         Scene scene = new Scene(fxmlLoader.load());
         setStage(stage, bundle, scene);

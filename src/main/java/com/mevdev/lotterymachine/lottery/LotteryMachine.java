@@ -10,7 +10,7 @@ import java.util.List;
 public class LotteryMachine {
     private final List<Subscriber> subscribers;
     private final LotteryConfig lotteryConfig;
-    private Random random;
+    private final Random random;
 
     private List<Integer> peopleTokens;
 

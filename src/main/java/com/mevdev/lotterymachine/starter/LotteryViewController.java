@@ -19,7 +19,7 @@ public class LotteryViewController {
 
     public void initialize() {
         timeline = new Timeline(
-                new KeyFrame(Duration.millis(250), e -> {
+                new KeyFrame(Duration.millis(125), e -> {
                     List<Subscriber> subList = SubListHolder.getSubscriberList();
                     subLabel.setText(subList.stream().map(Subscriber::getName).collect(Collectors.toList()).get(new JavaRandom().getRandomNumber(subList.size())));
                 })

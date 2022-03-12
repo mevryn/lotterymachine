@@ -1,7 +1,7 @@
 package com.mevdev.lotterymachine.subscribers;
 
 public enum SubType {
-    GIFTED, NORMAL;
+    GIFTED, NORMAL, PRIME;
 
 
     public static SubType returnSubType(String subType) {

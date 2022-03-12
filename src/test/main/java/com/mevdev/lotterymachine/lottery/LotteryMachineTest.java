@@ -32,6 +32,18 @@ class LotteryMachineTest {
     }
 
     @Test
+    public void shouldFailWhenNoTokensCanBeGenerated() {
+        List<Subscriber> subscribers = List.of(getSubscriber());
+        assertThrows(IllegalStateException.class, () -> new LotteryMachine(subscribers, new LotteryConfig(0, 0, 0, 0, 0, 0, 0)));
+    }
+
+    @Test
+    public void shouldFailForSubscriberOfSecondTierOfTypePrime() {
+        List<Subscriber> subscribers = List.of(new Subscriber("Adam", Tier.SECOND, SubType.PRIME));
+        assertThrows(IllegalArgumentException.class, () -> new LotteryMachine(subscribers, getLotteryConfig()));
+    }
+
+    @Test
     public void shouldSelectSubscriberWhenOnlyOneIsAvailable() {
         List<Subscriber> subscribers = List.of(getSubscriber());
         LotteryMachine lotteryMachine = new LotteryMachine(subscribers, getLotteryConfig());
@@ -54,6 +66,6 @@ class LotteryMachineTest {
     }
 
     private LotteryConfig getLotteryConfig() {
-        return new LotteryConfig(0, 0, 0, 0, 0, 0, 0);
+        return new LotteryConfig(0, 0, 0, 1, 0, 0, 0);
     }
 }

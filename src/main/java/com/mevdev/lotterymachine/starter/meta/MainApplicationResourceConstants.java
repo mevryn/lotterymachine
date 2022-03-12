@@ -11,4 +11,5 @@ public class MainApplicationResourceConstants {
     public static String SUB_LIST_VIEW_RESOURCE = GlobalConstants.GLOBAL_RESOURCE_PREFIX + "SubListView";
     public static String VIEW_TITLE = "view.title";
     public static String CHOSE_FILE = "choseFile";
+    public static String FILE_CHOSEN = "fileChosen";
 }

@@ -1,5 +1,6 @@
 package com.mevdev.lotterymachine.starter;
 
+import com.mevdev.lotterymachine.lottery.LotteryConfig;
 import com.mevdev.lotterymachine.starter.localeloader.LocaleLoader;
 import com.mevdev.lotterymachine.starter.meta.MainApplicationResourceConstants;
 import com.mevdev.lotterymachine.subscribers.FileSubReader;
@@ -10,50 +11,88 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 import static com.mevdev.lotterymachine.starter.HelloApplication.ICON_APPLICATION_NAME;
 
 public class MainViewController {
 
     @FXML
-    public Button drawButton;
+    public Button confirmationButton;
     @FXML
     public Label fileChosen;
+    public TextField subTier2Field;
+    public TextField subTier3Field;
+    public TextField subTier1Field;
+    public TextField subTierGift3Field;
+    public TextField subTierGift2Field;
+    public TextField subTierGift1Field;
+    public TextField primeField;
     LocaleLoader localeLoader = new LocaleLoader();
-    @FXML
-    private Label welcomeText;
     private List<Subscriber> subList = new ArrayList<>();
     private ResourceBundle resourceBundle;
 
     @FXML
-    protected void onHelloButtonClick() {
-        if (!subList.isEmpty()) {
-            int i = new Random().nextInt(subList.size() - 1);
-            welcomeText.setText(subList.get(i).toString());
-        } else {
-            welcomeText.setText(resourceBundle.getString(MainApplicationResourceConstants.CHOSE_FILE));
-        }
+    protected void onConfirmationButtonClick() throws IOException, URISyntaxException {
+        LotteryConfig lotteryConfig = getLotteryConfig();
+        //Start SubList
+        subList.isEmpty();
+        startSubList();
+        //Start LotteryView
+        startSubList();
+    }
+
+    private LotteryConfig getLotteryConfig() {
+        return new LotteryConfig(Integer.parseInt(subTierGift1Field.getText()),
+                Integer.parseInt(subTierGift2Field.getText()), Integer.parseInt(subTierGift3Field.getText()),
+                Integer.parseInt(subTier1Field.getText()),
+                Integer.parseInt(subTier2Field.getText()), Integer.parseInt(subTier3Field.getText()),
+                Integer.parseInt(primeField.getText()));
     }
 
     public void initialize() {
         LocaleLoader localeLoader = new LocaleLoader();
         resourceBundle = ResourceBundle.getBundle(MainApplicationResourceConstants.MAIN_APPLICATION_RESOURCE,
                 localeLoader.getProjectLocale());
+        confirmationButton.setDisable(true);
+        setTextReplacer(subTier2Field);
+        setTextReplacer(subTier1Field);
+        setTextReplacer(subTier3Field);
+        setTextReplacer(subTierGift3Field);
+        setTextReplacer(subTierGift2Field);
+        setTextReplacer(subTierGift1Field);
+        setTextReplacer(primeField);
     }
 
-    public void onFileChooserClick() throws IOException, URISyntaxException {
+    private void setTextReplacer(TextField textField) {
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                textField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+    }
+
+    public void onFileChooserClick() throws IOException {
         SubReader subReader = new FileSubReader();
         subList = subReader.getSubList();
-        fileChosen.setText(subList.stream().map(Subscriber::getName).collect(Collectors.toList()).toString());
-        //Start SubList
+        if (!subList.isEmpty()) {
+            fileChosen.setText(resourceBundle.getString(MainApplicationResourceConstants.FILE_CHOSEN));
+        } else {
+            fileChosen.setText("");
+        }
+        confirmationButton.setDisable(subList.isEmpty());
+    }
+
+    private void startSubList() throws IOException, URISyntaxException {
         ResourceBundle bundle = ResourceBundle.getBundle(MainApplicationResourceConstants.SUB_LIST_VIEW_RESOURCE,
                 localeLoader.getProjectLocale());
         FXMLLoader fxmlLoader =
@@ -61,7 +100,6 @@ public class MainViewController {
                         bundle);
         Scene scene = new Scene(fxmlLoader.load());
         setStage(new Stage(), bundle, scene);
-        //Start LotteryView
     }
 
     private void setStage(Stage stage, ResourceBundle bundle, Scene scene) throws URISyntaxException {

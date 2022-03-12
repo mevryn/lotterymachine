@@ -1,5 +1,7 @@
 package com.mevdev.lotterymachine.subscribers;
 
+import java.util.Objects;
+
 public class Subscriber {
 
     private final String name;
@@ -35,6 +37,19 @@ public class Subscriber {
 
     public static int getTypeIndexInCSV() {
         return 5;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Subscriber)) return false;
+        Subscriber that = (Subscriber) o;
+        return Objects.equals(name, that.name) && tier == that.tier && type == that.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, tier, type);
     }
 
     @Override
